@@ -25,6 +25,7 @@ public class Document {
 	@Column(name = "upload_time") // nome da coluna 
 	private Date uploadTime;
 	
+	@Column(name = "content", length = 100000000) // nome da coluna
 	private byte[] content; // armazena o tamanho do arquivo
 	
 	public Document(Long id, String name, long size) { // mostrar os arquivos na tela 
