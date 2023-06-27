@@ -1,22 +1,20 @@
 package com.estudo_bd.api.controllers;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
+import com.estudo_bd.api.entities.Arquivo;
 import com.estudo_bd.api.entities.Document;
+import com.estudo_bd.api.repositories.ArquivoRepository;
 import com.estudo_bd.api.repositories.DocumentRepository;
 
 import jakarta.servlet.ServletOutputStream;
@@ -28,11 +26,21 @@ public class UploadController {
 	@Autowired
 	private DocumentRepository repo;
 
+	@Autowired
+	private ArquivoRepository repo2;
+
 	@GetMapping("/upload")
 	public String viewHomePage(Model model) {
 		List<Document> listDocs = repo.findAll(); 	// para mostrar os arquivos na tela
 		model.addAttribute("listDocs", listDocs);
 		return "upload"; 							// direcionar para a pagina home
+	}
+
+	@GetMapping("/upload2")
+	public String viewUpload(Model model) {
+		List<Arquivo> listArquivos = repo2.findAll(); 	// para mostrar os arquivos na tela
+		model.addAttribute("listArquivos", listArquivos);
+		return "upload2"; 							// direcionar para a pagina home
 	}
 
 	@PostMapping("/upload")
