@@ -67,8 +67,9 @@ public class UploadArquivoController {
         Optional<Arquivo> arquivo1 = repo.findById(id);
 
         var nomeArquivo = arquivo1.get().getNome();
+        var localArquivo = arquivo1.get().getLocal();
 
-        byte[] arquivo = Files.readAllBytes( Paths.get(pathArquivos + nomeArquivo) );
+        byte[] arquivo = Files.readAllBytes( Paths.get(pathArquivos + localArquivo) );
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
