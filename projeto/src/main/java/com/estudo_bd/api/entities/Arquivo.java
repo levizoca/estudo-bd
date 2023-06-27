@@ -18,9 +18,16 @@ public class Arquivo {
     @Column(length = 512)
 	private String nome;
 
-    public Arquivo(Long id, String nome) { // mostrar os arquivos na tela 
+	@Column(length = 512)
+	private String local;
+
+	private long size;
+
+    public Arquivo(Long id, String nome, long size, String local) { // mostrar os arquivos na tela 
 		this.id = id;
 		this.nome = nome;
+		this.size = size;
+		this.local = local;
 	}
     
     public Arquivo() {
@@ -41,4 +48,20 @@ public class Arquivo {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
 }

@@ -44,10 +44,11 @@ public class UploadController {
 	}
 
 	@PostMapping("/upload")
-	public String uploadFile(@RequestParam("document") MultipartFile multipartFile, RedirectAttributes ra)
-			throws IOException { 														// redirecionar o botão, usando referencia para o atributo
+	public String uploadFile(@RequestParam("document") MultipartFile multipartFile, RedirectAttributes ra) throws IOException { // redirecionar o botão, usando referencia para o atributo
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); 	// utilizado uma classe util do spring para limpar
+		
 		Document document = new Document();
+
 		document.setName(fileName);
 		document.setContent(multipartFile.getBytes());
 		document.setSize(multipartFile.getSize());

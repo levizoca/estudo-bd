@@ -9,6 +9,6 @@ import com.estudo_bd.api.entities.Arquivo;
 
 @Repository
 public interface ArquivoRepository extends JpaRepository<Arquivo, Long> {
-    @Query("SELECT new Arquivo(a.id, a.nome) FROM Arquivo a ORDER BY a.nome DESC")
+    @Query("SELECT new Arquivo(a.id, a.nome, a.size, a.local) FROM Arquivo a ORDER BY a.nome DESC")
     List<Arquivo> findAll();
 }

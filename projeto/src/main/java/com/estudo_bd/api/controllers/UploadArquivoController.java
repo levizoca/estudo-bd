@@ -18,7 +18,7 @@ import com.estudo_bd.api.repositories.ArquivoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(value = "/api/upload", produces = {"application/json"})
+@RequestMapping(value = "/api/upload")
 @Slf4j
 @CrossOrigin("*")
 public class UploadArquivoController {
@@ -40,10 +40,11 @@ public class UploadArquivoController {
         var path = pathArquivos;
         var uuid = UUID.randomUUID();
         var caminho = path + uuid + "." + extrairExtensão(file.getOriginalFilename());
-        var nome = uuid + "." + extrairExtensão(file.getOriginalFilename());
+        var local = uuid + "." + extrairExtensão(file.getOriginalFilename());
 
-        arquivo.setNome(nome);
-
+        arquivo.setNome(file.getOriginalFilename());
+        arquivo.setLocal(local);
+        arquivo.setSize(file.getSize());
 
         try {
             Files.copy(file.getInputStream(), Path.of(caminho), StandardCopyOption.REPLACE_EXISTING);
