@@ -15,26 +15,26 @@
             <h1>Área de Upload</h1>
             <h3> [[${message}]]</h3> <!-- mensagem de aviso, puxa a variavel de aviso  -->
 
-            <form th:action="@{/api/upload/arquivo}" method="POST" enctype="multipart/form-data">
-                <div>
+            <form th:action="@{/upload}" method="POST" enctype="multipart/form-data">
+                <div class="border rounded m-3"> <!-- para adicionar uma borda no upload your files-->
                     <h2>Envie seus arquivos:</h2>
-                    <input type="file" name="file" required />
+                    <input type="file" name="document" required /> <!-- botão para pegar arquivo -->
                     <input type="submit" value="Upload" />
                 </div>
             </form>
             <br>
             <div style="width: 800px;">
-                <th:block th:each="arquivo:${listArquivos}"> <!-- para mostrar os aquivos na tela -->
+                <th:block th:each="doc : ${listDocs}"> <!-- para mostrar os aquivos na tela -->
                     <div class="col">
                         <div>
                             <img th:src="@{/images/icone-documentos.png}" width="50" />
                         </div>
                         <div>
-                            <a th:href="@{'api/upload/download?id=' +${arquivo.id}}">[[${arquivo.nome}]]</a>
+                            <a th:href="@{'/download?id=' +${doc.id}}">[[${doc.name}]]</a>
                             <!-- informações do nome, tamanho, icon -->
                         </div>
                         <div>
-                            ([[${#numbers.formatInteger(arquivo.size, 4, 'COMMA')}]] bytes)
+                            ([[${#numbers.formatInteger(doc.size, 4, 'COMMA')}]] bytes)
                         </div>
                     </div>
                 </th:block>

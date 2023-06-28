@@ -2,6 +2,7 @@ package com.estudo_bd.api.controllers;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,31 +10,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.estudo_bd.api.entities.Arquivo;
 import com.estudo_bd.api.repositories.ArquivoRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
-@RequestMapping(value = "/api/upload")
+@Controller
+@RequestMapping(value = "/api")
 @Slf4j
 @CrossOrigin("*")
-public class UploadArquivoController {
+public class ArquivoController {
 
     @Autowired
     private ArquivoRepository repo;
 
     private final String pathArquivos;
 
-    public UploadArquivoController(@Value("${app.path.arquivos}") String pathArquivos) {
+    public ArquivoController(@Value("${app.path.arquivos}") String pathArquivos) {
         this.pathArquivos = pathArquivos;
     }
-    
-    @PostMapping("/arquivo")
-    public ResponseEntity<String> salvarArquivo(@RequestParam("file") MultipartFile file) {
+
+    @GetMapping("/upload")
+	public String viewUpload(Model model) {
+		List<Arquivo> listArquivos = repo.findAll(); 	// para mostrar os arquivos na tela
+		model.addAttribute("listArquivos", listArquivos);
+		return "upload"; 							// direcionar para a pagina home
+	}
+
+    @PostMapping("/upload")
+    public String salvarArquivo(@RequestParam("file") MultipartFile file, RedirectAttributes ra) {
 
         Arquivo arquivo = new Arquivo();
 
@@ -49,10 +60,12 @@ public class UploadArquivoController {
         try {
             Files.copy(file.getInputStream(), Path.of(caminho), StandardCopyOption.REPLACE_EXISTING);
             repo.save(arquivo);
-            return new ResponseEntity<>("{ \"mensagem\": \"Arquivo salvo com sucesso!\"}", HttpStatus.OK);
+            ra.addFlashAttribute("message", "O arquivo foi upado com sucesso!");
+            return "redirect:/api/upload";
         } catch (Exception e) {
             log.error("Erro ao carregar arquivo: ", e);
-            return new ResponseEntity<>("{ \"mensagem\": \"Erro ao carregar arquivo!\"}", HttpStatus.OK);
+            ra.addFlashAttribute("message", "O arquivo não foi upado.");
+            return "redirect:/api/upload";
         }
     }
 
