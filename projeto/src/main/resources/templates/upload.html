@@ -13,6 +13,7 @@
     <header>
         <div>
             <h1>Área de Upload</h1>
+            <a href="/">Homepage</a>
             <h3> [[${message}]]</h3> <!-- mensagem de aviso, puxa a variavel de aviso  -->
 
             <form th:action="@{/api/upload}" method="POST" enctype="multipart/form-data">
@@ -31,6 +32,8 @@
                         <a th:href="@{'api/download?id='+${arquivo.id}}">[[ ${arquivo.nome} ]]</a>
 
                         <p>([[ ${ #numbers.formatInteger(arquivo.size, 4, 'COMMA') } ]] bytes)</p>
+                        <br>
+                        <a th:href="@{'delete?id='+${arquivo.id}}" style="color: red;">Deletar</a>
                     </div>
                 </th:block>
             </div>

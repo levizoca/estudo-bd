@@ -93,4 +93,19 @@ public class ArquivoController {
 
         return entity;                                                                  // retornar o arquivo
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@Param("id") Long id, RedirectAttributes ra) throws IOException {  // função para deletar o arquivo
+
+        Optional<Arquivo> arquivo1 = repo.findById(id);                                     // pegar o arquivo pelo id
+
+        var localArquivo = arquivo1.get().getLocal();                                       // variável para pegar o local do arquivo
+
+        Files.deleteIfExists( Paths.get(pathArquivos + localArquivo) );                     // deletar o arquivo
+
+        repo.deleteById(id);                                                                // deletar o arquivo pelo id
+
+        ra.addFlashAttribute("message", "O arquivo foi deletado com sucesso!");             // mensagem de sucesso
+        return "redirect:/api/upload";                                                      // redirecionar para a pagina home
+    }
 }
