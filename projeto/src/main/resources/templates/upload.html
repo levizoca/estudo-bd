@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/upload2.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/upload.css}">
     <title> Upload </title>
 </head>
 
@@ -28,7 +28,7 @@
                     <div class="item">
                         <img class="icone" th:src="@{'/tmp/'+${arquivo.local}}" width="50" />
                         <br>
-                        <a th:href="@{'api/download?id='+${arquivo.id}}">[[${arquivo.nome}]]</a>
+                        <a th:href="@{'api/download?id='+${arquivo.id}}">[[ ${arquivo.nome} ]]</a>
 
                         <p>([[ ${ #numbers.formatInteger(arquivo.size, 4, 'COMMA') } ]] bytes)</p>
                     </div>

@@ -13,7 +13,7 @@ public class Arquivo {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;	
 
     @Column(length = 512)
 	private String nome;
